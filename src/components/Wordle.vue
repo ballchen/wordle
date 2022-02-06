@@ -1,5 +1,5 @@
 <template lang="pug">
-.flex.flex-col.items-center.w-full
+.w-full.flex.flex-col.items-center
   .word-row.flex.flex-row(
     v-for="j in [0, 1, 2, 3, 4, 5]"
     v-bind:id="`trial-${j}`"

@@ -1,7 +1,10 @@
 <template lang="pug">
-.keyboard
+.keyboard(
+  class="w-full"
+)
   div.flex.items-center.justify-center
-    div.m-1(
+    div(
+      class="m-2px"
       v-for="char in 'qwertyuiop'"
     )
       button.keyboard-button(
@@ -9,7 +12,8 @@
         @click="input(char)"
       ) {{ char }}
   div.flex.items-center.justify-center
-    div.m-1(
+    div(
+      class="m-2px"
       v-for="char in 'asdfghjkl'"
     )
       button.keyboard-button(
@@ -17,20 +21,25 @@
         @click="input(char)"
       ) {{ char }}
   div.flex.items-center.justify-center
-    div.m-1
+    div(
+      class="m-2px"
+    )
       button.keyboard-button(
         @click="input('Enter')"
       ) ENTER
-    div.m-1(
+    div(
+      class="m-2px"
       v-for="char in 'zxcvbnm'"
     )
       button.keyboard-button(
         v-bind:class="keyboardButtonClass(char)"
       ) {{ char }}
-    div.m-1
+    div(
+      class="m-2px"
+    )
       button.keyboard-button(
         @click="input('Backspace')"
-      ) Back
+      ) ⌫
 </template>
 
 <script>
@@ -74,10 +83,12 @@ export default {
   background: #AAA;
   font-weight: 700;
   color: white;
-  min-width: 38px;
-  
+  min-width: 30px;
+  font-size: 14px;
+
   @apply rounded;
-  @apply p-3;
+  @apply px-2;
+  @apply py-3;
   @apply uppercase;
 
 

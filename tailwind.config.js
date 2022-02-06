@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      margin: {
+        '3px': '3px',
+        '2px': '2px',
+      }
+    },
   },
   plugins: [],
 }
