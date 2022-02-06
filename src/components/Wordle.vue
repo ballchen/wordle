@@ -1,90 +1,20 @@
 <template lang="pug">
 .flex.flex-col.items-center.w-full
-  #trial-1.word-row.flex.flex-row
+  .word-row.flex.flex-row(
+    v-for="j in [0, 1, 2, 3, 4, 5]"
+    v-bind:id="`trial-${j}`"
+  )
     div.px-3.flex.flex-row
       Word(
         v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[0].result"
+        :result="answers[j].result"
         :index="i"
-        :word="answers[0].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(0)"
+        :word="answers[j].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(j)"
       )
-  #trial-2.word-row.flex.flex-row
-    div.px-3.flex.flex-row
-      Word(
-        v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[1].result"
-        :index="i"
-        :word="answers[1].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(1)"
-      )
-
-  #trial-3.word-row.flex.flex-row
-    div.px-3.flex.flex-row
-      Word(
-        v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[2].result"
-        :index="i"
-        :word="answers[2].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(2)"
-      )
-  #trial-4.word-row.flex.flex-row
-    div.px-3.flex.flex-row
-      Word(
-        v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[3].result"
-        :index="i"
-        :word="answers[3].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(3)"
-      )
-
-  #trial-5.word-row.flex.flex-row
-    div.px-3.flex.flex-row
-      Word(
-        v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[4].result"
-        :index="i"
-        :word="answers[4].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(4)"
-      )
-  
-  #trial-6.word-row.flex.flex-row
-    div.px-3.flex.flex-row
-      Word(
-        v-for="i in [0, 1, 2, 3, 4]"
-        :result="answers[5].result"
-        :index="i"
-        :word="answers[5].word[i]" :usedWords="usedWords" :revealed="isTrialRevealed(5)"
-      )
-    
-  .keyboard.mt-3
-    div.flex.items-center.justify-center
-      div.m-1(
-        v-for="char in 'qwertyuiop'"
-      )
-        button.keyboard-button(
-          v-bind:class="keyboardButtonClass(char)"
-          @click="input(char)"
-        ) {{ char }}
-    div.flex.items-center.justify-center
-      div.m-1(
-        v-for="char in 'asdfghjkl'"
-      )
-        button.keyboard-button(
-          v-bind:class="keyboardButtonClass(char)"
-          @click="input(char)"
-        ) {{ char }}
-    div.flex.items-center.justify-center
-      div.m-1
-        button.keyboard-button(
-          @click="input('Enter')"
-        ) ENTER
-      div.m-1(
-        v-for="char in 'zxcvbnm'"
-      )
-        button.keyboard-button(
-          v-bind:class="keyboardButtonClass(char)"
-        ) {{ char }}
-      div.m-1
-        button.keyboard-button(
-          @click="input('Backspace')"
-        ) Back
-   
+  Keyboard.mt-3(
+    :usedWords="usedWords"
+    @input="input"
+  )
 
 </template>
 
@@ -95,6 +25,7 @@ import Swal from 'sweetalert2'
 import { useToast } from "vue-toastification";
 
 import Word from "./Word.vue";
+import Keyboard from "./Keyboard.vue";
 import dictionaryWithoutQuestions from '../assets/dictionary';
 import questions from '../assets/questions';
 
@@ -108,6 +39,7 @@ export default {
   name: 'Wordle',
   components: {
     Word,
+    Keyboard,
   },
   data() {
     return {
@@ -218,7 +150,7 @@ export default {
           } else if(
             result === 'OOOOO'
           ) {
-
+            this.trialCount += 1;
             Swal.fire({
               allowEnterKey: false,
               text: "你成功了",
@@ -324,36 +256,5 @@ export default {
 a {
   color: #42b983;
 }
-
-.word-row {
-  
-}
-
-.keyboard {
-  width: 600px;
-}
-.keyboard-button {
-  background: #AAA;
-  font-weight: 700;
-  color: white;
-  min-width: 38px;
-  
-  @apply rounded;
-  @apply p-3;
-  @apply uppercase;
-
-
-  &.correct {
-    background: #6aaa64;
-  }
-  &.almost {
-    background: #b59f3b;
-  }
-
-  &.wrong {
-    background: #333; 
-  }
-}
-
 
 </style>
