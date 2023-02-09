@@ -33,6 +33,7 @@
     )
       button.keyboard-button(
         v-bind:class="keyboardButtonClass(char)"
+        @click="input(char)"
       ) {{ char }}
     div(
       class="m-2px"
