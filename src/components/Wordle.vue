@@ -193,33 +193,50 @@ export default {
     },
 
     calculateResult(input, question) {
-      let result = ''
+      let result = new Array(5).fill(null);
       const usedWords = {
         correct: [],
         wrong: [],
         almost: [],
       };
 
+      let count = {}
+
       for (let i = 0; i < input.length; i++) {
+        if(!count[question[i]]) {
+          count[question[i]] = 1;
+        } else {
+          count[question[i]] += 1;
+        }
+         
         if(
           question[i] === input[i]
         ) {
-          result += 'O'
+          result[i] = 'O';
+          count[question[i]] -= 1;
           usedWords.correct.push(input[i])
-        } else if(
+        }
+      }
+
+
+      for (let i = 0; i < input.length; i++) {
+        if(
           question[i] !== input[i] &&
-          question.indexOf(input[i]) >= 0
+          question.indexOf(input[i]) >= 0 &&
+          count[input[i]] > 0
         ) {
-          result += 'S'
+          result[i] = 'S'
           usedWords.almost.push(input[i])
-        } else {
-          result += 'X'
+          count[input[i]] -= 1;
+        } else if(question[i] !== input[i]) {
+          result[i] = 'X'
           usedWords.wrong.push(input[i])
         }
       }
 
+
       return {
-        result,
+        result: result.join(''),
         usedWords,
       };
     },
